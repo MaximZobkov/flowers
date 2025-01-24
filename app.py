@@ -1,12 +1,18 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.utils import secure_filename
 import os
 import models
+import telegram
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Замените на свой секретный ключ
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
+
+# Настройки Telegram
+TELEGRAM_TOKEN = '7436726184:AAEpRkFBNMfT63moNvD7MCRbXZ9a2rvq6lo'
+TELEGRAM_CHAT_ID = '754086992'
+bot = telegram.Bot(token=TELEGRAM_TOKEN)
 
 @app.route('/')
 def index():
@@ -52,6 +58,19 @@ def cart():
 def clear_cart():
     session.pop('cart', None)
     return redirect(url_for('cart'))
+
+@app.route('/submit_order', methods=['POST'])
+def submit_order():
+    name = request.form['name']
+    phone = request.form['phone']
+    cart = session.get('cart', [])
+    cart_items = [f"{item[1]} - {item[3]} руб." for item in cart]
+    cart_items_str = "\n".join(cart_items)
+
+    message = f"Новый заказ:\n\nИмя: {name}\nТелефон: {phone}\n\nТовары:\n{cart_items_str}"
+    bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
+
+    return jsonify(success=True)
 
 if __name__ == '__main__':
     if not os.path.exists(app.config['UPLOAD_FOLDER']):

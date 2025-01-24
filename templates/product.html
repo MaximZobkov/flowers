@@ -2,7 +2,7 @@
 {% block content %}
 <h1>{{ flower[1] }}</h1>
 {% if flower[4] %}
-<img src="{{ flower[4] }}" alt="{{ flower[1] }}">
+<img src="../{{ flower[4] }}" alt="{{ flower[1] }}">
 {% else %}
 <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Placeholder">
 {% endif %}

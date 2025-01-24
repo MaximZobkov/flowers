@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>desFleur</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
 <header>
@@ -18,16 +20,11 @@
                             <stop offset="100%" style="stop-color:rgb(100,100,100);stop-opacity:1"/>
                         </linearGradient>
                     </defs>
-                    <text x="50%" y="50%" class="fancy-text" dominant-baseline="middle" text-anchor="middle">DesFleur
-                    </text>
+                    <text x="50%" y="50%" class="fancy-text" dominant-baseline="middle" text-anchor="middle">DesFleur</text>
                 </svg>
             </a>
         </div>
-        <div>
-            <a class="cart-link" href="/cart" target="_blank">
-                <img src="{{ url_for('static', filename='images/cart.svg') }}" alt="WhatsApp"
-                     style="width: 32px; height: 32px; vertical-align: middle;"> ({{ session.get('cart', [])|length }})</a>
-        </div>
+        <button id="cart-button" class="cart">Корзина ({{ session.get('cart', [])|length }})</button>
     </nav>
 </header>
 <div class="main-content">
@@ -45,21 +42,57 @@
         <div class="social-icons">
             <a href="https://t.me/desfleur_mykinino" target="_blank">
                 <img src="{{ url_for('static', filename='images/telegram.svg') }}" alt="Telegram"
-                     style="width: 32px; height: 32px; vertical-align: middle;">
+                     style="width: 24px; height: 24px; vertical-align: middle;">
             </a>
             <a href="https://vk.com/id871975525" target="_blank">
                 <img src="{{ url_for('static', filename='images/vk.svg') }}" alt="VK"
-                     style="width: 32px; height: 32px; vertical-align: middle;">
+                     style="width: 24px; height: 24px; vertical-align: middle;">
             </a>
             <a href="https://wa.me/79636676555" target="_blank">
                 <img src="{{ url_for('static', filename='images/whatsapp.svg') }}" alt="WhatsApp"
-                     style="width: 32px; height: 32px; vertical-align: middle;">
+                     style="width: 24px; height: 24px; vertical-align: middle;">
             </a>
         </div>
         <h3>Наш адрес:</h3>
-        <p><a href="https://yandex.ru/navi/org/desfleur/204205974366/?ll=37.348976%2C55.801481&z=16" target="_blank">г.
-            Москва, квартал №100, д. 1, корп. 1</a></p>
+        <p><a href="https://yandex.ru/navi/org/desfleur/204205974366/?ll=37.348976%2C55.801481&z=16" target="_blank">г. Москва, квартал №100, д. 1, корп. 1</a></p>
     </div>
 </footer>
+
+<!-- Модальное окно корзины -->
+<div id="cart-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Ваша корзина</h2>
+        <div id="cart-items">
+            {% for item in session.get('cart', []) %}
+            <div class="cart-item">
+                <h3>{{ item[1] }}</h3>
+                <p>{{ item[2] }}</p>
+                <p>Цена: {{ item[3] }} руб.</p>
+            </div>
+            {% endfor %}
+        </div>
+        <button id="checkout-button" class="checkout-button">Оформить заказ</button>
+    </div>
+</div>
+
+<!-- Модальное окно оформления заказа -->
+<div id="order-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Оформление заказа</h2>
+        <form id="order-form">
+            <div class="form-group">
+                <label for="name">ФИО:</label>
+                <input type="text" id="name" name="name" required class="form-input">
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефона:</label>
+                <input type="tel" id="phone" name="phone" pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}" required class="form-input" placeholder="+7 (XXX) XXX-XX-XX">
+            </div>
+            <button type="submit" class="form-button">Отправить</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>

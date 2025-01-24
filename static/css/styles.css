@@ -1,6 +1,6 @@
 /* Общие стили */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Lora', serif;
     background-color: #f9f9f9;
     margin: 0;
     padding: 0;
@@ -8,21 +8,6 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-.fancy-text {
-    font-family: 'Cursive', sans-serif;
-    font-size: 32px;
-    font-weight: bold;
-    fill: url(#grad1);
-    text-anchor: middle;
-    stroke: black;
-    stroke-width: 1;
-}
-
-.cart-link {
-    color: black;
-    text-decoration: none;
 }
 
 /* Стили для header */
@@ -53,15 +38,24 @@ nav {
     height: 50px;
 }
 
+.fancy-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: bold;
+    fill: url(#grad1);
+    text-anchor: middle;
+    stroke: black;
+    stroke-width: 1;
+}
+
 .cart {
     background-color: #000;
     color: white;
     padding: 0.5em 1em;
-    text-decoration: none;
+    border: none;
     border-radius: 5px;
     font-size: 1em;
-    position: absolute;
-    right: 2em;
+    cursor: pointer;
 }
 
 .cart:hover {
@@ -95,12 +89,17 @@ nav {
 .bouquets-container h1 {
     text-align: center;
     color: #333;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5em;
+    margin-bottom: 1em;
 }
 
-.bouquets-container p {
+.bouquets-container p.description {
     text-align: center;
     color: #666;
+    font-size: 1.2em;
     margin-bottom: 2em;
+    line-height: 1.6;
 }
 
 .flowers {
@@ -116,10 +115,13 @@ nav {
     width: calc(33.33% - 2em);
     box-sizing: border-box;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     transition: transform 0.2s;
     overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: none; /* Убираем тень */
+    border: none; /* Убираем обводку */
 }
 
 .flower-card:hover {
@@ -139,10 +141,16 @@ nav {
 .flower-info h2 {
     margin-top: 0.5em;
     color: #333;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5em;
+    font-weight: normal; /* Убираем выделение текста */
 }
 
 .flower-info p {
     color: #666;
+    font-family: 'Lora', serif;
+    font-size: 1em;
+    font-weight: normal; /* Убираем выделение текста */
 }
 
 .flower-info .btn {
@@ -257,6 +265,123 @@ footer {
 
 .social-icons a {
     margin: 0 10px;
+}
+
+/* Стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.cart-item {
+    margin-bottom: 1em;
+}
+
+.checkout-button {
+    background-color: #000;
+    color: white;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.checkout-button:hover {
+    background-color: #222;
+}
+
+.form-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.7em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.form-button:hover {
+    background-color: #45a049;
+}
+
+/* Стили для страницы товара */
+.flower-details {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    margin: 2em auto;
+    padding: 2em;
+    text-align: center;
+}
+
+.flower-details h1 {
+    color: #333;
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+}
+
+.flower-details .flower-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 1em;
+}
+
+.flower-details p {
+    color: #666;
+    font-family: 'Lora', serif;
+    font-size: 1em;
+    margin-bottom: 1em;
+}
+
+.add-to-cart-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.7em 1.4em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.add-to-cart-button:hover {
+    background-color: #45a049;
 }
 
 /* Media queries for responsive design */
