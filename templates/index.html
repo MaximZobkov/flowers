@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="bouquets-container">
+    <h1>Букеты</h1>
+    <p>Каждый букет мы собираем с особым трепетом и любовью, как себе. Только свежие цветы, лаконичность и эстетика. В
+        подарок прикрепляем мини-открытку и подкормку для продления жизни цветов.</p>
+    <div class="flowers">
+        {% for flower in flowers %}
+        <div class="flower-card">
+            <div class="flower-image">
+                {% if flower[4] %}
+                <img src="../{{ flower[4] }}" alt="{{ flower[1] }}">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Placeholder">
+                {% endif %}
+            </div>
+            <div class="flower-info">
+                <h2>{{ flower[1] }}</h2>
+                <p>{{ flower[2] }}</p>
+                <p>Цена: {{ flower[3] }} руб.</p>
+                </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

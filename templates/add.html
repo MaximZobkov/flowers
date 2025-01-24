@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="add-flower-container">
+    <h1>Добавить новый цветок</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Название:</label>
+            <input type="text" id="name" name="name" required class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="description">Описание:</label>
+            <textarea id="description" name="description" class="form-textarea"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="price">Цена:</label>
+            <input type="number" id="price" name="price" step="0.01" required class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="image">Изображение:</label>
+            <input type="file" id="image" name="image" accept="image/*" class="form-input">
+        </div>
+        <button type="submit" class="form-button">Добавить цветок</button>
+    </form>
+</div>
+{% endblock %}

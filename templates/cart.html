@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Корзина</h1>
+{% if cart %}
+<div class="flowers">
+    {% for item in cart %}
+    <div class="flower">
+        {% if item[4] %}
+        <img src="{{ item[4] }}" alt="{{ item[1] }}">
+        {% else %}
+        <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Placeholder">
+        {% endif %}
+        <h2>{{ item[1] }}</h2>
+        <p>{{ item[2] }}</p>
+        <p>Цена: {{ item[3] }} руб.</p>
+    </div>
+    {% endfor %}
+</div>
+<a href="{{ url_for('clear_cart') }}">Очистить корзину</a>
+{% else %}
+<p>Ваша корзина пуста.</p>
+{% endif %}
+{% endblock %}

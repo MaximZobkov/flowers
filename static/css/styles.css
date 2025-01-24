@@ -1,0 +1,279 @@
+/* Общие стили */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.fancy-text {
+    font-family: 'Cursive', sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    fill: url(#grad1);
+    text-anchor: middle;
+    stroke: black;
+    stroke-width: 1;
+}
+
+.cart-link {
+    color: black;
+    text-decoration: none;
+}
+
+/* Стили для header */
+header {
+    background-color: #ffffff;
+    padding: 1em 2em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logo svg {
+    width: 200px;
+    height: 50px;
+}
+
+.cart {
+    background-color: #000;
+    color: white;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+    position: absolute;
+    right: 2em;
+}
+
+.cart:hover {
+    background-color: #222;
+}
+
+/* Стили для основного контента */
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    padding: 2em;
+}
+
+/* Стили для букетов */
+.bouquets-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.bouquets-container h1 {
+    text-align: center;
+    color: #333;
+}
+
+.bouquets-container p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 2em;
+}
+
+.flowers {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.flower-card {
+    background-color: #ffffff;
+    margin: 1em;
+    padding: 0;
+    width: calc(33.33% - 2em);
+    box-sizing: border-box;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    transition: transform 0.2s;
+    overflow: hidden;
+}
+
+.flower-card:hover {
+    transform: scale(1.05);
+}
+
+.flower-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px 8px 0 0;
+}
+
+.flower-info {
+    padding: 1em;
+}
+
+.flower-info h2 {
+    margin-top: 0.5em;
+    color: #333;
+}
+
+.flower-info p {
+    color: #666;
+}
+
+.flower-info .btn {
+    display: inline-block;
+    margin-top: 0.5em;
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.flower-info .btn:hover {
+    background-color: #45a049;
+}
+
+/* Стили для формы добавления цветка */
+.add-flower-container {
+    background-color: #ffffff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 2em auto;
+}
+
+.add-flower-container h1 {
+    text-align: center;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1em;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5em;
+    color: #333;
+}
+
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.form-button {
+    display: block;
+    width: 100%;
+    padding: 0.7em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.form-button:hover {
+    background-color: #45a049;
+}
+
+/* Стили для footer */
+footer {
+    background-color: #000;
+    color: white;
+    text-align: center;
+    padding: 2em 0;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content h2 {
+    color: white;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+
+.footer-content h3 {
+    color: white;
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+}
+
+.footer-content p {
+    color: #ddd;
+    margin: 0.5em 0;
+    font-size: 1.1em;
+}
+
+.footer-content a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
+
+.social-icons a {
+    margin: 0 10px;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 1200px) {
+    .flower-card {
+        width: calc(33.33% - 2em);
+    }
+}
+
+@media (max-width: 900px) {
+    .flower-card {
+        width: calc(50% - 2em);
+    }
+}
+
+@media (max-width: 600px) {
+    .flower-card {
+        width: calc(100% - 2em);
+    }
+}
