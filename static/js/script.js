@@ -43,7 +43,6 @@ document.getElementById("order-form").onsubmit = function(event) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert("Ваш заказ успешно отправлен!");
             orderModal.style.display = "none";
         } else {
             alert("Произошла ошибка при отправке заказа.");

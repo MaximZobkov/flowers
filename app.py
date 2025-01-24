@@ -2,7 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 from werkzeug.utils import secure_filename
 import os
 import models
-import telegram
+import requests
+import logging
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Замените на свой секретный ключ
@@ -10,9 +11,12 @@ app.config['UPLOAD_FOLDER'] = 'static/uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 
 # Настройки Telegram
-TELEGRAM_TOKEN = '7436726184:AAEpRkFBNMfT63moNvD7MCRbXZ9a2rvq6lo'
-TELEGRAM_CHAT_ID = '754086992'
-bot = telegram.Bot(token=TELEGRAM_TOKEN)
+TELEGRAM_TOKEN = '7436726184:AAEpRkFBNMfT63moNvD7MCRbXZ9a2rvq6lo'  # Замените на ваш токен API
+TELEGRAM_CHAT_ID = '754086992'  # Замените на ваш Chat ID
+TELEGRAM_API_URL = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage'
+
+# Настройка логирования
+logging.basicConfig(level=logging.INFO)
 
 @app.route('/')
 def index():
@@ -68,9 +72,22 @@ def submit_order():
     cart_items_str = "\n".join(cart_items)
 
     message = f"Новый заказ:\n\nИмя: {name}\nТелефон: {phone}\n\nТовары:\n{cart_items_str}"
-    bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
 
-    return jsonify(success=True)
+    # Отправка сообщения через requests
+    payload = {
+        'chat_id': TELEGRAM_CHAT_ID,
+        'text': message
+    }
+    response = requests.post(TELEGRAM_API_URL, data=payload)
+
+    # Логирование ответа
+    logging.info(f"Response status code: {response.status_code}")
+    logging.info(f"Response text: {response.text}")
+
+    if response.status_code == 200:
+        return jsonify(success=True)
+    else:
+        return jsonify(success=False, error=response.text), 500
 
 if __name__ == '__main__':
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
