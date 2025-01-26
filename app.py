@@ -1,9 +1,12 @@
+import logging
+import os
+
+import requests
+from PIL import Image
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from werkzeug.utils import secure_filename
-import os
+
 import models
-import requests
-import logging
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Замените на свой секретный ключ
@@ -12,16 +15,54 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB
 
 # Настройки Telegram
 TELEGRAM_TOKEN = '7436726184:AAEpRkFBNMfT63moNvD7MCRbXZ9a2rvq6lo'  # Замените на ваш токен API
-TELEGRAM_CHAT_ID = '754086992'  # Замените на ваш Chat ID
+TELEGRAM_USERNAME = '754086992'  # Замените на имя пользователя, например, @myflowerbot
 TELEGRAM_API_URL = f'https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage'
 
 # Настройка логирования
 logging.basicConfig(level=logging.INFO)
 
+# Новые категории товаров
+CATEGORIES = [
+    "Букеты, композиции, корзины",
+    "Комнатные растения, грунт, удобрения, кашпо, вазы",
+    "Шары и товары для праздника",
+    "Мягкие игрушки",
+    "Аксессуары, очки, бижутерия",
+    "Сувениры",
+    "Премиум уходовая косметика",
+    "Подарочные пакеты, открытки",
+    "Флористическое оформление",
+    "Цветы оптом"
+]
+
+def crop_image(image_path):
+    with Image.open(image_path) as img:
+        img = img.convert("RGB")
+        width, height = img.size
+        if width != height:
+            if height > width:
+                top = (height - width) / 2
+                bottom = (height + width) / 2
+                left = 0
+                right = width
+            else:
+                left = (width - height) / 2
+                right = (width + height) / 2
+                top = 0
+                bottom = height
+            img = img.crop((left, top, right, bottom))
+        img.save(image_path)
+
 @app.route('/')
 def index():
-    flowers = models.get_flowers()
-    return render_template('index.html', flowers=flowers)
+    category = request.args.get('category')
+    categories_with_flowers = models.get_categories_with_flowers()
+    if category:
+        flowers = models.get_flowers_by_category(category)
+        grouped_flowers = {category: flowers}
+    else:
+        grouped_flowers = models.get_flowers_grouped_by_category()
+    return render_template('index.html', grouped_flowers=grouped_flowers, categories=categories_with_flowers)
 
 @app.route('/flower/<int:flower_id>')
 def flower(flower_id):
@@ -34,16 +75,20 @@ def add_flower():
         name = request.form['name']
         description = request.form['description']
         price = request.form['price']
-        image = request.files['image']
-        if image:
-            filename = secure_filename(image.filename)
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            image.save(image_path)
-        else:
-            image_path = None
-        models.add_flower(name, description, price, image_path)
+        category = request.form['category']
+        image_files = request.files.getlist('image')
+        image_paths = []
+        for image in image_files:
+            if image:
+                filename = secure_filename(image.filename)
+                image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+                image.save(image_path)
+                crop_image(image_path)  # Обрезка изображения до соотношения 1:1
+                image_paths.append(image_path)
+        image_paths_str = ','.join(image_paths)
+        models.add_flower(name, description, price, image_paths_str, category)
         return redirect(url_for('index'))
-    return render_template('add.html')
+    return render_template('add.html', categories=CATEGORIES)
 
 @app.route('/add_to_cart/<int:flower_id>')
 def add_to_cart(flower_id):
@@ -75,7 +120,7 @@ def submit_order():
 
     # Отправка сообщения через requests
     payload = {
-        'chat_id': TELEGRAM_CHAT_ID,
+        'chat_id': TELEGRAM_USERNAME,
         'text': message
     }
     response = requests.post(TELEGRAM_API_URL, data=payload)
