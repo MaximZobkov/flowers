@@ -183,23 +183,21 @@ nav {
 }
 
 .flower-info {
-    padding: 1em;
     background-color: #ffffff; /* Белый */
     border-radius: 0 0 8px 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: -10px; /* Сдвигаем вверх для наложения на изображение */
 }
 
 .flower-info h2 {
     margin-top: 0.5em;
-    color: #333;
+    color: #333333;
     font-family: 'Playfair Display', serif;
     font-size: 1.5em;
     font-weight: normal; /* Убираем выделение текста */
 }
 
 .flower-info p {
-    color: #666;
+    color: #666666;
     font-family: 'Lora', serif;
     font-size: 1em;
     font-weight: normal; /* Убираем выделение текста */
@@ -471,4 +469,19 @@ footer {
     .flower-card {
         width: calc(50% - 2em);
     }
+  .flower-details {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .flower-images-description {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .flower-images {
+        margin-right: 0;
+        margin-bottom: 1em;
+    }
+
 }
