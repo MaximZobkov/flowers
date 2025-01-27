@@ -30,7 +30,7 @@
     <h2>{{ category }}</h2>
     <div class="flowers">
         {% for flower in flowers %}
-        <a href="../{{ flower[0] }}" class="flower-card">
+        <a href="{{ url_for('flower', flower_id=flower[0]) }}" class="flower-card">
             <div class="flower-image">
                 {% if flower[4] %}
                 {% set image_paths = flower[4].split(',') %}
