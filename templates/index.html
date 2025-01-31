@@ -18,10 +18,15 @@
         </ul>
     </div>
     {% for category, flowers in grouped_flowers.items() %}
-    <h2>{{ category }}</h2>
+    <h2 class="category-name">{{ category }}</h2>
+    <div class="category-message">
+        <p>
+            {{ categories_description[category] }}
+        </p>
+    </div>
     <div class="flowers">
         {% for flower in flowers %}
-        <a href="{{ url_for('flower', flower_id=flower[0]) }}" class="flower-card">
+        <a href="{{ url_for('flower', flower_id=flower[0]) }}" style="text-decoration: none;" class="flower-card">
             <div class="flower-image">
                 {% if flower[4] %}
                 {% set image_paths = flower[4].split(',') %}

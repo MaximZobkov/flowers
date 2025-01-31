@@ -88,18 +88,17 @@ nav {
 
 .welcome-message {
     text-align: center;
-    margin-bottom: 2em;
     padding: 2em;
-    background-color: #f9f9f9; /* Нежно-бежевый */
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-name {
+    padding-left: 20px;
 }
 
 .welcome-message h1 {
     color: #333;
     font-family: 'Playfair Display', serif;
     font-size: 2.5em;
-    margin-bottom: 1em;
 }
 
 .welcome-message p {
@@ -107,6 +106,16 @@ nav {
     font-size: 1.2em;
     margin-bottom: 1em;
     line-height: 1.6;
+}
+
+.category-message p {
+    margin-top: 1em;
+    color: #666;
+    font-size: 1.2em;
+    margin-bottom: 1em;
+    line-height: 1.6;
+    margin-left: 20px;
+    justify-content: inherit;
 }
 
 .category-filters {
@@ -153,25 +162,20 @@ nav {
     flex-wrap: wrap;
     justify-content: space-around;
     margin-bottom: 2em;
+    text-decoration: none;
 }
 
 .flower-card {
-    background-color: transparent; /* Прозрачный */
-    margin: 1em;
-    padding: 0;
+    margin-top: 2em;
+    text-decoration: none;
     width: calc(33.33% - 2em);
-    box-sizing: border-box;
     text-align: center;
     border-radius: 8px;
     transition: transform 0.2s;
-    overflow: hidden;
-    text-decoration: none;
-    color: inherit;
-    box-shadow: none; /* Убираем тень */
-    border: none; /* Убираем обводку */
 }
 
 .flower-card:hover {
+    text-display: none;
     transform: scale(1.05);
 }
 
@@ -179,6 +183,7 @@ nav {
     width: 100%;
     height: auto;
     border-radius: 8px;
+    text-decoration: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -186,6 +191,7 @@ nav {
     background-color: #ffffff; /* Белый */
     border-radius: 0 0 8px 8px;
     margin-top: -10px; /* Сдвигаем вверх для наложения на изображение */
+    text-decoration: none;
 }
 
 .flower-info h2 {
@@ -194,6 +200,7 @@ nav {
     font-family: 'Playfair Display', serif;
     font-size: 1.5em;
     font-weight: normal; /* Убираем выделение текста */
+    text-decoration: none;
 }
 
 .flower-info p {
@@ -378,7 +385,6 @@ footer {
 .flower-details {
     background-color: #ffffff; /* Белый */
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 1200px;
     margin: 2em auto;
