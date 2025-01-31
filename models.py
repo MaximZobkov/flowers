@@ -1,7 +1,6 @@
 # models.py
 import sqlite3
 
-
 # Инициализация базы данных
 def init_db():
     conn = sqlite3.connect('flowers.db')
@@ -19,7 +18,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-
 # Добавление товара
 def add_flower(name, description, price, image_paths, category):
     conn = sqlite3.connect('flowers.db')
@@ -31,7 +29,6 @@ def add_flower(name, description, price, image_paths, category):
     conn.commit()
     conn.close()
 
-
 # Получение всех товаров
 def get_flowers():
     conn = sqlite3.connect('flowers.db')
@@ -40,7 +37,6 @@ def get_flowers():
     flowers = c.fetchall()
     conn.close()
     return flowers
-
 
 # Получение товара по ID
 def get_flower(flower_id):
@@ -51,7 +47,6 @@ def get_flower(flower_id):
     conn.close()
     return flower
 
-
 # Получение товаров по категории
 def get_flowers_by_category(category):
     conn = sqlite3.connect('flowers.db')
@@ -60,7 +55,6 @@ def get_flowers_by_category(category):
     flowers = c.fetchall()
     conn.close()
     return flowers
-
 
 # Получение всех товаров, сгруппированных по категориям
 def get_flowers_grouped_by_category():
@@ -77,7 +71,6 @@ def get_flowers_grouped_by_category():
             grouped_flowers[category_name] = flowers
     conn.close()
     return grouped_flowers
-
 
 # Получение категорий, в которых есть товары
 def get_categories_with_flowers():

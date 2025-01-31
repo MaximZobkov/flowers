@@ -23,7 +23,9 @@ nav {
     align-items: center;
     width: 100%;
 }
-
+.logo1 {
+    display: none;
+}
 .logo-container {
     flex: 1;
     display: flex;
@@ -47,7 +49,9 @@ nav {
     stroke: black;
     stroke-width: 1;
 }
-
+.lgo {
+    display: none;
+}
 .cart {
     background-color: #000; /* Черный */
     color: white;
@@ -56,6 +60,7 @@ nav {
     border-radius: 5px;
     font-size: 1em;
     cursor: pointer;
+    width: 100%;
 }
 
 .cart:hover {
@@ -70,10 +75,11 @@ nav {
     padding: 2em;
 }
 
-.container {
+.container1 {
     background-color: #ffffff; /* Белый */
     border-radius: 8px;
     width: 100%;
+    max-width: 1200px;
     padding: 2em;
 }
 
@@ -84,7 +90,7 @@ nav {
 }
 
 .welcome-message {
-    text-align: center;
+    justify-content: inherit;
     padding: 2em;
 }
 
@@ -448,7 +454,9 @@ footer {
 .add-to-cart-button:hover {
     background-color: #ddd; /* Светло-серый */
 }
-
+.logo-full {
+    display: block;
+}
 /* Media queries for responsive design */
 @media (max-width: 1200px) {
     .flower-card {
@@ -460,7 +468,8 @@ footer {
     .flower-card {
         width: calc(50% - 1em);
     }
-  .container {
+
+    .container1 {
     max-width: 100%;
   }
 }
@@ -469,7 +478,14 @@ footer {
     .flower-card {
         width: calc(100% - 1em);
     }
+
+    .container1 {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
+    }
 }
+
 
 @media (max-width: 768px) {
     .flower-card {
@@ -489,8 +505,18 @@ footer {
         margin-right: 0;
         margin-bottom: 1em;
     }
-  .container {
-    max-width: 100%;
+
+    .container1 {
+        max-width: 100%;
+        padding: 0;
+        margin: 0;
   }
+    .logo-full {
+        display: none;
+    }
+    .lgo {
+        display: block;
+        font-size: 2em;
+    }
 
 }

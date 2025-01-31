@@ -1,25 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="bouquets-container">
-    <div class="welcome-message">
-        <p>
-            Цветочный Дом DesFleur — это мир ароматов, красок и эмоций, где создаются уникальные цветочные композиции.
-            Наши талантливые флористы предлагают свежие и красивые букеты, а также занимаются оформлением интерьеров,
-            праздников и выставочных стендов как в России, так и за рубежом. А также мы продаем цветы оптом.
-        </p>
-    </div>
-    <div class="category-filters">
-        <h2>Фильтр по категориям:</h2>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Все категории</a></li>
-            {% for category in categories %}
-            <li><a href="{{ url_for('index') }}?category={{ category }}">{{ category }}</a></li>
-            {% endfor %}
-        </ul>
-    </div>
+
     {% for category, flowers in grouped_flowers.items() %}
-    <h2 class="category-name">{{ category }}</h2>
-    <div class="category-message">
+    <h2 class="category-name" align="center">{{ category }}</h2>
+    <div class="category-message" style="text-align: center">
         <p>
             {{ categories_description[category] }}
         </p>
@@ -44,5 +29,13 @@
         {% endfor %}
     </div>
     {% endfor %}
+    <div class="welcome-message">
+        <h1>О нас</h1>
+        <p>
+            Цветочный Дом DesFleur — это мир ароматов, красок и эмоций, где создаются уникальные цветочные композиции.
+            Наши талантливые флористы предлагают свежие и красивые букеты, а также занимаются оформлением интерьеров,
+            праздников и выставочных стендов как в России, так и за рубежом. А также мы продаем цветы оптом.
+        </p>
+    </div>
 </div>
 {% endblock %}
