@@ -73,16 +73,13 @@ nav {
 .container {
     background-color: #ffffff; /* Белый */
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 1200px;
     padding: 2em;
 }
 
 /* Стили для букетов */
 .bouquets-container {
     width: 100%;
-    max-width: 1200px;
     margin: 0 auto;
 }
 
@@ -167,8 +164,9 @@ nav {
 
 .flower-card {
     margin-top: 2em;
+    margin-bottom: 2em;
     text-decoration: none;
-    width: calc(33.33% - 2em);
+    width: calc(33.33% - 1em);
     text-align: center;
     border-radius: 8px;
     transition: transform 0.2s;
@@ -182,7 +180,7 @@ nav {
 .flower-image img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    margit-bottom: 2em;
     text-decoration: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -190,7 +188,7 @@ nav {
 .flower-info {
     background-color: #ffffff; /* Белый */
     border-radius: 0 0 8px 8px;
-    margin-top: -10px; /* Сдвигаем вверх для наложения на изображение */
+    margin-top: 10px; /* Сдвигаем вверх для наложения на изображение */
     text-decoration: none;
 }
 
@@ -386,9 +384,8 @@ footer {
     background-color: #ffffff; /* Белый */
     border-radius: 8px;
     width: 100%;
-    max-width: 1200px;
-    margin: 2em auto;
-    padding: 2em;
+    margin: 1em auto;
+    padding: 1em;
     display: flex;
     justify-content: center;
 }
@@ -403,7 +400,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 2em;
+    margin-right: 1em;
 }
 
 .main-image {
@@ -455,25 +452,28 @@ footer {
 /* Media queries for responsive design */
 @media (max-width: 1200px) {
     .flower-card {
-        width: calc(33.33% - 2em);
+        width: calc(33.33% - 1em);
     }
 }
 
 @media (max-width: 900px) {
     .flower-card {
-        width: calc(50% - 2em);
+        width: calc(50% - 1em);
     }
+  .container {
+    max-width: 100%;
+  }
 }
 
 @media (max-width: 600px) {
     .flower-card {
-        width: calc(100% - 2em);
+        width: calc(100% - 1em);
     }
 }
 
 @media (max-width: 768px) {
     .flower-card {
-        width: calc(50% - 2em);
+        width: calc(50% - 1em);
     }
   .flower-details {
         flex-direction: column;
@@ -489,5 +489,8 @@ footer {
         margin-right: 0;
         margin-bottom: 1em;
     }
+  .container {
+    max-width: 100%;
+  }
 
 }
