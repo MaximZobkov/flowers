@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block content %}
+<img class="vizit" src="../static/images/pisec.png">
 <div class="bouquets-container">
-
     {% for category, flowers in grouped_flowers.items() %}
-    <h2 class="category-name" align="center">{{ category }}</h2>
+    <h2 class="category-name">{{ category }}</h2>
     <div class="category-message" style="text-align: center">
         <p>
             {{ categories_description[category] }}
@@ -12,7 +12,7 @@
     <div class="flowers">
         {% for flower in flowers %}
         <a href="{{ url_for('flower', flower_id=flower[0]) }}" style="text-decoration: none;" class="flower-card">
-            <div class="flower-image">
+            <div class="flower-images">
                 {% if flower[4] %}
                 {% set image_paths = flower[4].split(',') %}
                 <img src="../{{ image_paths[0] }}" alt="{{ flower[1] }}"

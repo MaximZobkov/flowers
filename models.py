@@ -47,6 +47,14 @@ def get_flower(flower_id):
     conn.close()
     return flower
 
+def get_path(flower_id):
+    conn = sqlite3.connect('flowers.db')
+    c = conn.cursor()
+    c.execute('SELECT image_paths FROM flowers WHERE id = ?', (flower_id,))
+    path = c.fetchone()
+    conn.close()
+    return path
+
 # Получение товаров по категории
 def get_flowers_by_category(category):
     conn = sqlite3.connect('flowers.db')
@@ -80,3 +88,23 @@ def get_categories_with_flowers():
     categories = c.fetchall()
     conn.close()
     return [category[0] for category in categories]
+
+# Обновление товара
+def update_flower(flower_id, name, description, price, image_paths, category):
+    conn = sqlite3.connect('flowers.db')
+    c = conn.cursor()
+    c.execute('''
+        UPDATE flowers
+        SET name = ?, description = ?, price = ?, image_paths = ?, category = ?
+        WHERE id = ?
+    ''', (name, description, price, image_paths, category, flower_id))
+    conn.commit()
+    conn.close()
+
+# Удаление товара
+def delete_flower(flower_id):
+    conn = sqlite3.connect('flowers.db')
+    c = conn.cursor()
+    c.execute('DELETE FROM flowers WHERE id = ?', (flower_id,))
+    conn.commit()
+    conn.close()

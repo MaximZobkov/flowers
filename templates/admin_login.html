@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="add-flower-container">
+    <h1>Вход в админ-панель</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" id="password" name="password" required class="form-input">
+        </div>
+        <button type="submit" class="form-button">Войти</button>
+    </form>
+</div>
+{% endblock %}

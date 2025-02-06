@@ -39,7 +39,7 @@
                     </div>
                 </li>
             </ul>
-            <div class="logo-full">
+            <div class="logo-full" style="margin-right: 35%">
                 <a href="{{ url_for('index') }}" class="logo">
                     <svg width="200" height="50" xmlns="http://www.w3.org/2000/svg">
                         <defs>
@@ -56,7 +56,8 @@
             </div>
             <p class="mr-auto"></p>
             <p class="mt-1 mb-1">
-                <button id="cart-button" class="cart">Корзина ({{ session.get('cart', [])|length }})</button>
+                <button id="cart-button" class="cart">Корзина (<span id="cart-count">{{ session.get('cart', [])|length }}</span>)
+                </button>
             </p>
         </div>
     </nav>
@@ -89,23 +90,32 @@
         </div>
         <h3>Наш адрес:</h3>
         <p><a href="https://yandex.ru/navi/org/desfleur/204205974366/?ll=37.348976%2C55.801481&z=16" target="_blank">г. Москва, квартал №100, д. 1, корп. 1</a></p>
+        <p>
+            <a href="https://yandex.ru/maps/213/moscow/house/prospekt_mira_88s1/Z04YcARnSEQGQFtvfXt4cn5hYw==/?ll=37.637110%2C55.792145&z=13.77"
+               target="_blank">г. Москва, проспект Мира, 88с1, торговое место 30-31</a></p>
     </div>
 </footer>
 
+<!-- Полупрозрачный слой для блокировки контента -->
+<div id="modal-backdrop" class="modal-backdrop"></div>
+
 <!-- Модальное окно корзины -->
 <div id="cart-modal" class="modal">
+    <span class="close-button">&times;</span>
     <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h2>Ваша корзина</h2>
+        <h2>Ваш заказ:</h2>
         <div id="cart-items">
             {% for item in session.get('cart', []) %}
-            <div class="cart-item">
-                <h3>{{ item[1] }}</h3>
-                <p>{{ item[2] }}</p>
-                <p>Цена: {{ item[3] }} руб.</p>
+            <div class="cart-item" data-flower-id="{{ item[0] }}">
+                {% set image_paths = item[4].split(',') %}
+                <img src="../{{ image_paths[0] }}" alt="{{ item[1] }}" style="height: 4em">
+                <span class="ml-4">{{ item[1] }}</span>
+                <a class="remove-from-cart-mark">&times;</a>
+                <span class="cost">{{ item[3] }} руб.</span>
             </div>
             {% endfor %}
         </div>
+        <p style="font-size: 1.1em">Сумма: <span style="font-size: 1.1em" id="total-price">{{ total_price }}</span> руб.</p>
         <button id="checkout-button" class="checkout-button">Оформить заказ</button>
     </div>
 </div>

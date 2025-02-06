@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="add-flower-container">
+    <h1>Удалить товар</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for flower in flowers %}
+            <tr>
+                <td>{{ flower[1] }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete_flower', flower_id=flower[0]) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
