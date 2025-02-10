@@ -12,6 +12,15 @@
     <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
 </head>
 <body>
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="flash-messages">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
 <header>
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark">
         <div class="lgo">
@@ -101,14 +110,13 @@
 
 <!-- Модальное окно корзины -->
 <div id="cart-modal" class="modal">
-    <span class="close-button">&times;</span>
     <div class="modal-content">
-        <h2>Ваш заказ:</h2>
+        <span class="close-button">&times;</span>
+        <h2>Ваша корзина:</h2>
         <div id="cart-items">
             {% for item in session.get('cart', []) %}
             <div class="cart-item" data-flower-id="{{ item[0] }}">
-                {% set image_paths = item[4].split(',') %}
-                <img src="../{{ image_paths[0] }}" alt="{{ item[1] }}" style="height: 4em">
+                <img src="../{{ item[4].split(',')[0] }}" alt="{{ item[1] }}" style="height: 4em">
                 <span class="ml-4">{{ item[1] }}</span>
                 <a class="remove-from-cart-mark">&times;</a>
                 <span class="cost">{{ item[3] }} руб.</span>

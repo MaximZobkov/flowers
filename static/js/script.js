@@ -1,4 +1,4 @@
-//Получаем элементы
+// Получаем элементы
 var cartModal = document.getElementById("cart-modal");
 var orderModal = document.getElementById("order-modal");
 var cartBtn = document.getElementById("cart-button");
@@ -103,6 +103,45 @@ document.addEventListener('DOMContentLoaded', function () {
             console.error('Error:', error);
         });
     });
+
+    // Обработка прокрутки изображений
+    var thumbnails = document.querySelectorAll('.thumbnail');
+    var mainImage = document.getElementById('main-image');
+
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function () {
+            mainImage.src = this.src;
+        });
+    });
+
+    // Обработка увеличения изображения при наведении
+    var flowerCards = document.querySelectorAll('.flower-card img');
+
+    flowerCards.forEach(flowerCard => {
+        flowerCard.addEventListener('mouseover', function () {
+            this.style.transform = 'scale(1.1)';
+        });
+
+        flowerCard.addEventListener('mouseout', function () {
+            this.style.transform = 'scale(1)';
+        });
+    });
+
+    // Обработка стрелок прокрутки изображений
+    var leftArrow = document.querySelector('.thumbnail-arrow.left');
+    var rightArrow = document.querySelector('.thumbnail-arrow.right');
+
+    leftArrow.addEventListener('click', function () {
+        var currentIndex = Array.from(thumbnails).indexOf(document.querySelector('.thumbnail.active'));
+        var newIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+        thumbnails[newIndex].click();
+    });
+
+    rightArrow.addEventListener('click', function () {
+        var currentIndex = Array.from(thumbnails).indexOf(document.querySelector('.thumbnail.active'));
+        var newIndex = (currentIndex + 1) % thumbnails.length;
+        thumbnails[newIndex].click();
+    });
 });
 
 // Функция для обновления корзины
@@ -116,12 +155,12 @@ function updateCart() {
         data.cart.forEach(item => {
             var cartItem = document.createElement('div');
             cartItem.classList.add('cart-item');
-            cartItem.setAttribute('data-flower-id', item[0]);
+            cartItem.setAttribute('data-flower-id', item.id);
             cartItem.innerHTML = `
-                <img src="../${item[4].split(',')[0]}" alt="${item[1]}" style="height: 4em">
-                <span class="ml-4">${item[1]}</span>
+                <img src="../${item.image}" alt="${item.name}" style="height: 4em">
+                <span class="ml-4">${item.name} (x${item.quantity})</span>
                 <a class="remove-from-cart-mark">&times;</a>
-                <span class="cost">${item[3]} руб.</span>
+                <span class="cost">${item.price * item.quantity} руб.</span>
             `;
             cartItems.appendChild(cartItem);
         });
@@ -131,3 +170,16 @@ function updateCart() {
         console.error('Error:', error);
     });
 }
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImage = document.getElementById('main-image');
+
+    thumbnails.forEach(thumbnail => {
+        thumbnail.addEventListener('click', function () {
+            mainImage.src = this.src;
+        });
+    });
+});

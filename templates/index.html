@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <img class="vizit" src="../static/images/pisec.png">
+<img class="vizit-mobile" src="../static/images/mobile.png">
 <div class="bouquets-container">
     {% for category, flowers in grouped_flowers.items() %}
     <h2 class="category-name">{{ category }}</h2>

@@ -50,6 +50,7 @@ CATEGORY_DESCRIPTIONS = {
     "Цветы оптом": "Для тех, кто занимается бизнесом, мы предлагаем оптовые поставки свежих цветов. Наши цветы всегда высокого качества и готовы украсить любое мероприятие или интерьер."
 }
 
+
 def crop_image(image_path):
     with Image.open(image_path) as img:
         img = img.convert("RGB")
@@ -116,12 +117,15 @@ def add_flower():
 
 @app.route('/add_to_cart/<int:flower_id>')
 def add_to_cart(flower_id):
+    global flower_cart
     flower = models.get_flower(flower_id)
     if 'cart' not in session:
         session['cart'] = []
     session['cart'].append(flower)
     session.modified = True
+    flash('Товар добавлен в корзину', 'success')
     return redirect(url_for('index'))
+
 
 
 @app.route('/clear_cart', methods=['POST'])
@@ -132,9 +136,23 @@ def clear_cart():
 
 @app.route('/get_cart')
 def get_cart():
+    cart_with_quantities = []
+    flower_cart = {}
     cart_items = session.get('cart', [])
-    total_price = sum(item[3] for item in cart_items)
-    return jsonify(cart=cart_items, total_price=total_price)
+    total_price = 0
+    for item in cart_items:
+        flower_cart[item[0]] = flower_cart.get(item[0], 0) + 1
+    for item in set(cart_items):
+        cart_with_quantities.append({
+            'id': item[0],
+            'name': item[1],
+            'price': item[3],
+            'image': item[4].split(',')[0] if item[4] else None,
+            'quantity': flower_cart.get(item[0], 0)
+        })
+        total_price += item[3] * flower_cart.get(item[0])
+    return jsonify(cart=cart_with_quantities, total_price=total_price)
+
 
 
 
