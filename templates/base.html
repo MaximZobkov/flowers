@@ -16,7 +16,12 @@
 {% if messages %}
 <div class="flash-messages">
     {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">{{ message }}</div>
+    <div class="alert alert-{{ category }}" id="flash-message-{{ loop.index }}">{{ message }}</div>
+    <script>
+        setTimeout(function() {
+            document.getElementById('flash-message-{{ loop.index }}').style.display = 'none';
+        }, 3000);
+    </script>
     {% endfor %}
 </div>
 {% endif %}
@@ -127,25 +132,30 @@
         <button id="checkout-button" class="checkout-button">Оформить заказ</button>
     </div>
 </div>
-
 <!-- Модальное окно оформления заказа -->
 <div id="order-modal" class="modal">
     <div class="modal-content">
         <span class="close-button">&times;</span>
         <h2>Оформление заказа</h2>
         <form id="order-form">
-            <div class="form-group">
-                <label for="name">ФИО:</label>
-                <input type="text" id="name" name="name" required class="form-input">
-            </div>
-            <div class="form-group">
-                <label for="phone">Номер телефона:</label>
-                <input type="tel" id="phone" name="phone" pattern="\+7\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}" required class="form-input" placeholder="+7 (XXX) XXX-XX-XX">
-            </div>
-            <button type="submit" class="form-button">Отправить</button>
-        </form>
+        <div class="form-group">
+            <label for="name">ФИО:</label>
+            <input type="text" id="name" name="name" required class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="phone">Телефон:</label>
+            <input type="text" id="phone" name="phone" required class="form-input">
+        </div>
+        <div class="form-group">
+            <label for="promo_code">Промокод:</label>
+            <input type="text" id="promo_code" name="promo_code" class="form-input">
+        </div>
+        <button type="submit" class="form-button">Оформить заказ</button>
+    </form>
     </div>
 </div>
+<!-- В index.html и product.html добавим поле для ввода промокода -->
+
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" crossorigin="anonymous"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"

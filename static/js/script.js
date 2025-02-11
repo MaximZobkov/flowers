@@ -37,6 +37,7 @@ document.getElementById("order-form").onsubmit = function(event) {
     event.preventDefault();
     var name = document.getElementById("name").value;
     var phone = document.getElementById("phone").value;
+    var promo_code = document.getElementById("promo_code").value;
 
     fetch('/submit_order', {
         method: 'POST',
@@ -45,23 +46,34 @@ document.getElementById("order-form").onsubmit = function(event) {
         },
         body: new URLSearchParams({
             name: name,
-            phone: phone
+            phone: phone,
+            promo_code: promo_code
         })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            orderModal.style.display = "none";
-            modalBackdrop.style.display = "none";
-            updateCart();
+            alert("Заказ успешно оформлен!");
+            // Очистка корзины после успешного оформления заказа
+            fetch('/', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    updateCart();
+                }
+            });
         } else {
-            alert("Произошла ошибка при отправке заказа.");
+            alert("Произошла ошибка при оформлении заказа.");
         }
     })
     .catch((error) => {
         console.error('Error:', error);
     });
 }
+
+
 
 // Обработка удаления товара из корзины
 document.addEventListener('DOMContentLoaded', function () {
@@ -183,3 +195,4 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+

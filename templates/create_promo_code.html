@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="create-promo-code-container">
+    <h1>Создание промокода</h1>
+    <form method="POST">
+        <div class="form-group">
+            <label for="discount">Размер скидки (%):</label>
+            <input type="number" id="discount" name="discount" required class="form-input" min="1" max="100">
+        </div>
+        <div class="form-group">
+            <label for="code_length">Длина промокода:</label>
+            <input type="number" id="code_length" name="code_length" required class="form-input" min="1">
+        </div>
+        <button type="submit" class="form-button">Создать промокод</button>
+    </form>
+    {% if promo_code %}
+    <div class="promo-code-result">
+        <h2>Сгенерированный промокод:</h2>
+        <p>Промокод: {{ promo_code }}</p>
+        <p>Скидка: {{ discount }}%</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
