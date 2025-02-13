@@ -176,11 +176,9 @@ function updateCart() {
                         <span>${item.name} (x${item.quantity})</span>
                     </div>
                     <div class="cost-div">
-                        <span class="cost">${item.price * item.quantity} р.</span>
+                        <span class="cost">${item.price * item.quantity}&nbsp</span><span>р.</span>
                     </div>
-                    <div class="mark-del">
                         <a class="remove-from-cart-mark">&times;</a>
-                    </div>
             `;
             cartItems.appendChild(cartItem);
         });

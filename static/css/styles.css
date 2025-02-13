@@ -584,6 +584,29 @@ footer {
 }
 
 @media (max-width: 600px) {
+    .img-carts {
+        float: left;
+        display: table-cell;
+        max-width: 15%;
+    }
+
+    .name-products {
+        float: left;
+        margin-left: 20px;
+        width: 55%;
+        display: table-cell;
+    }
+
+    .cost-div {
+        float: left;
+        width: 15%;
+        margin-top: 0.8em;
+    }
+
+    .mark-del {
+        float: right;
+        width: 3%;
+    }
     .flower-card {
         width: calc(100% - 2em);
     }
