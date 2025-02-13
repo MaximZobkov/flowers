@@ -55,7 +55,7 @@ document.getElementById("order-form").onsubmit = function(event) {
         if (data.success) {
             alert("Заказ успешно оформлен!");
             // Очистка корзины после успешного оформления заказа
-            fetch('/', {
+            fetch('/clear_cart', {
                 method: 'POST'
             })
             .then(response => response.json())
@@ -169,10 +169,18 @@ function updateCart() {
             cartItem.classList.add('cart-item');
             cartItem.setAttribute('data-flower-id', item.id);
             cartItem.innerHTML = `
-                <img src="../${item.image}" alt="${item.name}" style="height: 4em">
-                <span class="ml-4">${item.name} (x${item.quantity})</span>
-                <a class="remove-from-cart-mark">&times;</a>
-                <span class="cost">${item.price * item.quantity} руб.</span>
+                <div class="img-carts">
+                        <img style="height: 8vh" src="../${item.image}" alt="${item.name}">
+                    </div>
+                    <div class="name-products" >
+                        <span>${item.name} (x${item.quantity})</span>
+                    </div>
+                    <div class="cost-div">
+                        <span class="cost">${item.price * item.quantity} р.</span>
+                    </div>
+                    <div class="mark-del">
+                        <a class="remove-from-cart-mark">&times;</a>
+                    </div>
             `;
             cartItems.appendChild(cartItem);
         });

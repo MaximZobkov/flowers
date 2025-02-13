@@ -227,7 +227,7 @@ def submit_order():
         total_price_new = total_price * (1 - discount / 100)  # Применяем скидку
 
 
-    message = f"Новый заказ:\n\nФИО: {name}\nТелефон: {phone}\n\nТовары:\n{cart_items_str}\n------------------------------------\n\nСумма: {total_price} руб.\n\n\nПосле применения промокода {promo_code} - стоимость: {total_price_new}"
+    message = f"Новый заказ:\n\nФИО: {name}\nТелефон: {phone}\n\nТовары:\n{cart_items_str}\n------------------------------------\n\nСумма: {total_price} руб.\n\nПосле применения промокода на {PROMO_CODES[promo_code]}% - стоимость: {total_price_new}"
 
     # Отправка сообщения через requests
     payload = {

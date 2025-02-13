@@ -383,15 +383,35 @@ footer {
     border-top: #333333 1px solid;
     margin-bottom: 10px;
 }
-.cost {
-    float: right;
-    margin-right: 10%;
-    margin-top: 0.8em;
+
+.cart-item {
+    display: table;
+    width: 100%; /*Optional*/
 }
 
-.cart-item span {
-    font-size: 1.2em;
+.img-carts {
+    float: left;
+    display: table-cell;
+    max-width: 15%;
 }
+
+.name-products {
+    float: left;
+    margin-left: 6px;
+    width: 67%;
+    display: table-cell;
+}
+
+.cost-div {
+    float: left;
+    width: 15%;
+}
+
+.mark-del {
+    float: right;
+    width: 3%;
+}
+
 
 .remove-from-cart-mark {
     border-radius: 5px;
@@ -400,7 +420,6 @@ footer {
     cursor: pointer;
     text-decoration: none;
     float: right;
-    margin-top: 0.2em;
 }
 
 .remove-from-cart-mark:hover {
@@ -439,7 +458,18 @@ footer {
     background-color: #ccc;
     cursor: not-allowed;
 }
-
+.admin-panel-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 2em auto;
+    padding: 2em;
+}
+.admin-panel-container button{
+    width: 45%;
+}
 /* Стили для страницы товара */
 .flower-details {
     background-color: #ffffff;
@@ -580,6 +610,7 @@ footer {
     .vizit {
         display: none;
     }
+
 }
 
 @media (max-width: 768px) {
@@ -621,6 +652,7 @@ footer {
     .vizit {
         display: none;
     }
+
 }
 
 /* Стили для полупрозрачного слоя */
@@ -633,29 +665,6 @@ footer {
     height: 100%;
     background-color: rgba(0, 0, 10, 0.1);
     z-index: 10;
-}
-
-.thumbnail-arrow {
-    background-color: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 18px;
-    border-radius: 50%;
-    margin: 0 5px;
-}
-
-.thumbnail-arrow:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.thumbnails {
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
-    gap: 10px;
-    padding: 10px 0;
 }
 
 /* В styles.css */
