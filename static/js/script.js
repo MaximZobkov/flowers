@@ -56,6 +56,7 @@ document.getElementById("order-form").onsubmit = function (event) {
                     .then(data => {
                         if (data.success) {
                             updateCart();
+                            location.replace("/");
                         }
                     });
             } else {
