@@ -90,6 +90,7 @@ def crop_image(image_path):
             img = img.crop((left, top, right, bottom))
         img.save(image_path)
 
+
 @app.route('/')
 def index():
     category = request.args.get('category')
@@ -106,12 +107,14 @@ def index():
     return render_template('index.html', grouped_flowers=grouped_flowers, categories=categories_with_flowers,
                            categories_description=CATEGORY_DESCRIPTIONS, cart_items=cart_items, total_price=total_price)
 
+
 @app.route('/flower/<int:flower_id>')
 def flower(flower_id):
     flower = models.get_flower(flower_id)
     cart_items = session.get('cart', [])
     total_price = sum(item[3] for item in cart_items)
     return render_template('product.html', flower=flower, total_price=total_price)
+
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_flower():
@@ -136,6 +139,7 @@ def add_flower():
         return redirect(url_for('admin_panel'))
     return render_template('add.html', categories=CATEGORIES)
 
+
 @app.route('/add_to_cart/<int:flower_id>')
 def add_to_cart(flower_id):
     global flower_cart
@@ -146,7 +150,6 @@ def add_to_cart(flower_id):
     session.modified = True
     flash('Товар добавлен в корзину', 'success')
     return redirect(url_for('index'))
-
 
 
 @app.route('/clear_cart', methods=['POST'])
@@ -176,8 +179,6 @@ def get_cart():
     return jsonify(cart=cart_with_quantities, total_price=total_price)
 
 
-
-
 @app.route('/remove_from_cart/<int:flower_id>', methods=['POST'])
 def remove_from_cart(flower_id):
     if 'cart' in session:
@@ -197,46 +198,29 @@ def admin_panel():
     return render_template('admin.html')
 
 
-@app.route('/create_promo_code', methods=['GET', 'POST'])
-def create_promo_code():
-    if not session.get('admin'):
-        return redirect(url_for('admin'))
-
-    if request.method == 'POST':
-        discount = int(request.form['discount'])
-        code_length = int(request.form['code_length'])
-        promo_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=code_length))
-        PROMO_CODES[promo_code] = discount
-        return render_template('create_promo_code.html', promo_code=promo_code, discount=discount)
-
-    return render_template('create_promo_code.html')
 @app.route('/submit_order', methods=['POST'])
 def submit_order():
     name = request.form['name']
     phone = request.form['phone']
     promo_code = request.form.get('promo_code', '')
     cart = session.get('cart', [])
-    print(cart)
     cart_items = [f"{item[1]} - {item[3]} руб." for item in cart]
     cart_items_str = "\n".join(cart_items)
     total_price = sum([int(item.split()[-2]) for item in cart_items])
+    message = f"Новый заказ:\n\nФИО: {name}\nТелефон: {phone}\n\nТовары:\n{cart_items_str}\n------------------------------------\n\nСумма: {total_price} руб."
 
-    # Проверяем промокод
-    if promo_code in PROMO_CODES:
-        discount = PROMO_CODES[promo_code]
-        total_price_new = total_price * (1 - discount / 100)  # Применяем скидку
+    # Check the promo code
+    promo_data = models.get_promo_code(promo_code)
+    if promo_data and models.use_promo_code(promo_code):
+        discount = promo_data['discount']
+        total_price_new = total_price * (1 - discount / 100)  # Apply the discount
+        message += f"\n\nПосле применения промокода на {discount}% - стоимость: {total_price_new}"
 
-
-    message = f"Новый заказ:\n\nФИО: {name}\nТелефон: {phone}\n\nТовары:\n{cart_items_str}\n------------------------------------\n\nСумма: {total_price} руб.\n\nПосле применения промокода на {PROMO_CODES[promo_code]}% - стоимость: {total_price_new}"
-
-    # Отправка сообщения через requests
-    payload = {
-        'chat_id': TELEGRAM_USERNAME,
-        'text': message
-    }
+    # Send the message via requests
+    payload = {'chat_id': TELEGRAM_USERNAME, 'text': message}
     response = requests.post(TELEGRAM_API_URL, data=payload)
 
-    # Логирование ответа
+    # Log the response
     logging.info(f"Response status code: {response.status_code}")
     logging.info(f"Response text: {response.text}")
 
@@ -244,6 +228,33 @@ def submit_order():
         return jsonify(success=True)
     else:
         return jsonify(success=False, error=response.text), 500
+
+
+@app.route('/create_promo_code', methods=['GET', 'POST'])
+def create_promo_code():
+    if not session.get('admin'):
+        return redirect(url_for('admin'))
+
+    if request.method == 'POST':
+        discount = int(request.form['discount'])
+        uses_left = int(request.form['uses_left'])
+        promo_code = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+        promo_codes = models.load_promo_codes()
+        promo_codes['promo_codes'][promo_code] = {'discount': discount, 'uses_left': uses_left}
+        models.save_promo_codes(promo_codes)
+        return render_template('create_promo_code.html', promo_code=promo_code, discount=discount, uses_left=uses_left)
+
+    return render_template('create_promo_code.html')
+
+
+@app.route('/check_promo_code', methods=['POST'])
+def check_promo_code():
+    promo_code = request.form.get('promo_code')
+    promo_data = models.get_promo_code(promo_code)
+    if promo_data and promo_data['uses_left'] > 0:
+        return jsonify(valid=True)
+    else:
+        return jsonify(valid=False)
 
 
 @app.route('/admin', methods=['GET', 'POST'])
@@ -314,6 +325,7 @@ def delete_flower(flower_id):
                 os.remove(image_path)
     models.delete_flower(flower_id)
     return redirect(url_for('delete_flower_list'))
+
 
 if __name__ == '__main__':
     if not os.path.exists(app.config['UPLOAD_FOLDER']):

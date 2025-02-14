@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>desFleur</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;700&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" crossorigin="anonymous"
           href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2">
@@ -14,18 +15,18 @@
 </head>
 <body>
 {% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-<div class="flash-messages">
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}" id="flash-message-{{ loop.index }}">{{ message }}</div>
-    <script>
-        setTimeout(function() {
-            document.getElementById('flash-message-{{ loop.index }}').style.display = 'none';
-        }, 3000);
-    </script>
-    {% endfor %}
-</div>
-{% endif %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}" id="flash-message-{{ loop.index }}">{{ message }}</div>
+                <script>
+                    setTimeout(function () {
+                        document.getElementById('flash-message-{{ loop.index }}').style.display = 'none';
+                    }, 3000);
+                </script>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endwith %}
 <header>
     <nav class="navbar navbar-expand-lg sticky-top navbar-dark">
@@ -48,8 +49,8 @@
                     <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
                         <a class="dropdown-item" href="{{ url_for('index') }}">Все категории</a>
                         {% for category in categories %}
-                        <a class="dropdown-item" href="{{ url_for('index') }}?category={{ category }}">{{ category
-                            }}</a>
+                            <a class="dropdown-item"
+                               href="{{ url_for('index') }}?category={{ category }}">{{ category }}</a>
                         {% endfor %}
                     </div>
                 </li>
@@ -71,7 +72,8 @@
             </div>
             <p class="mr-auto"></p>
             <p class="mt-1 mb-1">
-                <button id="cart-button" class="cart">Корзина (<span id="cart-count">{{ session.get('cart', [])|length }}</span>)
+                <button id="cart-button" class="cart">Корзина (<span
+                        id="cart-count">{{ session.get('cart', [])|length }}</span>)
                 </button>
             </p>
         </div>
@@ -104,16 +106,13 @@
             </a>
         </div>
         <h3>Наш адрес:</h3>
-        <p><a href="https://yandex.ru/navi/org/desfleur/204205974366/?ll=37.348976%2C55.801481&z=16" target="_blank">г. Москва, квартал №100, д. 1, корп. 1</a></p>
+        <p><a href="https://yandex.ru/navi/org/desfleur/204205974366/?ll=37.348976%2C55.801481&z=16" target="_blank">г.
+            Москва, квартал №100, д. 1, корп. 1</a></p>
         <p>
             <a href="https://yandex.ru/maps/213/moscow/house/prospekt_mira_88s1/Z04YcARnSEQGQFtvfXt4cn5hYw==/?ll=37.637110%2C55.792145&z=13.77"
                target="_blank">г. Москва, проспект Мира, 88с1, торговое место 30-31</a></p>
     </div>
 </footer>
-
-<!-- Полупрозрачный слой для блокировки контента -->
-<div id="modal-backdrop" class="modal-backdrop"></div>
-
 <!-- Модальное окно корзины -->
 <div id="cart-modal" class="modal">
 
@@ -133,8 +132,8 @@
                         <span class="cost">${str(item.price * item.quantity)&nbsp</span><span>р.</span>
                     </div>
 
-                        <a class="remove-from-cart-mark">&times;</a>
-            </div>
+                    <a class="remove-from-cart-mark">&times;</a>
+                </div>
             {% endfor %}
         </div>
         <p style="font-size: 1.1em">Сумма: <span style="font-size: 1.1em" id="total-price">{{ total_price }}</span> р.
@@ -148,20 +147,24 @@
     <div class="modal-content">
         <h2>Оформление заказа</h2>
         <form id="order-form">
-        <div class="form-group">
-            <label for="name">ФИО:</label>
-            <input type="text" id="name" name="name" required class="form-input">
-        </div>
-        <div class="form-group">
-            <label for="phone">Телефон:</label>
-            <input type="text" id="phone" name="phone" required class="form-input">
-        </div>
-        <div class="form-group">
-            <label for="promo_code">Промокод:</label>
-            <input type="text" id="promo_code" name="promo_code" class="form-input">
-        </div>
-        <button type="submit" class="form-button">Оформить заказ</button>
-    </form>
+            <div class="form-group">
+                <label for="name">ФИО:</label>
+                <input type="text" id="name" name="name" required class="form-input">
+            </div>
+            <div class="form-group">
+                <label for="phone">Телефон:</label>
+                <input type="text" id="phone" name="phone" required class="form-input">
+            </div>
+            <!-- В модальном окне оформления заказа (order-modal) -->
+            <div class="form-group">
+                <label for="promo_code">Промокод:</label>
+                <input type="text" id="promo_code" name="promo_code" class="form-input">
+                <button type="button" id="apply-promo-code" class="form-button">Применить промокод</button>
+                <p id="promo-code-message"></p>
+            </div>
+
+            <button type="submit" class="form-button">Оформить заказ</button>
+        </form>
     </div>
 </div>
 <!-- В index.html и product.html добавим поле для ввода промокода -->

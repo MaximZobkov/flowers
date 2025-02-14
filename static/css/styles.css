@@ -781,3 +781,7 @@ footer {
     margin-bottom: 0.5em;
 }
 
+.name-and-close {
+    display: table;
+}
+

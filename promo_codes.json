@@ -1,0 +1,16 @@
+{
+    "promo_codes": {
+        "PROMO123": {
+            "discount": 10,
+            "uses_left": 5
+        },
+        "DISCOUNT456": {
+            "discount": 20,
+            "uses_left": 3
+        },
+        "CS0Z4GNP": {
+            "discount": 10,
+            "uses_left": 197
+        }
+    }
+}
