@@ -43,7 +43,8 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle btn" href="#" id="categoriesDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: white">
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       style="text-decoration: none;font-size: 1.4em;color: white;font-family: bradley hand, cursive;">
                         Категории
                     </a>
                     <div class="dropdown-menu" aria-labelledby="categoriesDropdown">
@@ -55,7 +56,7 @@
                     </div>
                 </li>
             </ul>
-            <div class="logo-full" style="margin-right: 35%">
+            <div class="logo-full" style="margin-right: 35vw">
                 <a href="{{ url_for('index') }}" class="logo">
                     <svg width="200" height="50" xmlns="http://www.w3.org/2000/svg">
                         <defs>
@@ -70,22 +71,22 @@
                     </svg>
                 </a>
             </div>
-            <p class="mr-auto"></p>
             <p class="mt-1 mb-1">
-                <button id="cart-button" class="cart">Корзина (<span
-                        id="cart-count">{{ session.get('cart', [])|length }}</span>)
-                </button>
+                <a href="#contact" class="contacts">Контакты</a>
             </p>
         </div>
     </nav>
 </header>
+<button id="cart-button" class="cart"><img class="cart-image" src="../static/images/cart.svg"><span
+        id="cart-count" style="display: none">{{ session.get('cart', [])|length }}</span>
+</button>
 <div class="main-content">
     <div class="container1">
         {% block content %}{% endblock %}
     </div>
 </div>
 <footer>
-    <div class="footer-content">
+    <div class="footer-content" id="contact">
         <h2>Свяжитесь с нами</h2>
         <p>Вы можете задать вопросы и оформить заказ по телефону или в наших социальных сетях</p>
         <h3>Наш номер:</h3>
@@ -115,10 +116,11 @@
 </footer>
 <!-- Модальное окно корзины -->
 <div id="cart-modal" class="modal">
-
-    <span class="close-button">&times;</span>
     <div class="modal-content">
-        <h2>Ваш заказ:</h2>
+        <div class="name-and-close">
+            <span class="close-button">&times;</span>
+            <h2>Ваш заказ:</h2>
+        </div>
         <div class="mt-4" id="cart-items">
             {% for item in session.get('cart', []) %}
                 <div class="cart-item" data-flower-id="{{ item[0] }}">
@@ -143,9 +145,11 @@
 </div>
 <!-- Модальное окно оформления заказа -->
 <div id="order-modal" class="modal">
-    <span class="close-button">&times;</span>
     <div class="modal-content">
-        <h2>Оформление заказа</h2>
+        <div class="name-and-close">
+            <h2>Оформление заказа</h2>
+            <span class="close-button">&times;</span>
+        </div>
         <form id="order-form">
             <div class="form-group">
                 <label for="name">ФИО:</label>
@@ -159,7 +163,7 @@
             <div class="form-group">
                 <label for="promo_code">Промокод:</label>
                 <input type="text" id="promo_code" name="promo_code" class="form-input">
-                <button type="button" id="apply-promo-code" class="form-button">Применить промокод</button>
+                <button type="button" id="apply-promo-code" class="form-button form-button-apply mt-4">Применить промокод</button>
                 <p id="promo-code-message"></p>
             </div>
 
