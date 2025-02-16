@@ -572,11 +572,49 @@ footer {
     margin-bottom: 1em;
 }
 
-.thumbnails {
+.main-image-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.main-image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.thumbnail-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
     display: flex;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.5em;
+    transition: background-color 0.3s ease;
 }
+
+.thumbnail-arrow.left {
+    left: 10px;
+}
+
+.thumbnail-arrow.right {
+    right: 10px;
+}
+
+.thumbnail-arrow:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
 
 .flower-info {
     flex: 2;
@@ -636,9 +674,11 @@ footer {
     .flower-card {
         width: calc(50% - 2em);
     }
+
     .remove-from-cart-mark {
         right: 4vw;
     }
+
     .logo-full {
         display: none;
     }
@@ -679,6 +719,7 @@ footer {
         display: table-cell;
         max-width: 15%;
     }
+
     .remove-from-cart-mark {
         right: 6vw;
     }
@@ -753,9 +794,11 @@ footer {
     .cart-image {
         width: 5vw;
     }
+
     .remove-from-cart-mark {
         right: 5vw;
     }
+
     .cart {
         position: fixed;
         top: 12vh;
@@ -911,9 +954,43 @@ footer {
 .name-and-close {
     display: table;
 }
+
 .name-and-close .close-button {
     position: absolute;
     top: 0;
     font-size: 2em;
     right: 0.6em;
 }
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.decrease-quantity,
+.increase-quantity {
+    background-color: #f58c78; /* Розовый цвет */
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: background-color 0.3s ease;
+}
+
+.decrease-quantity:hover,
+.increase-quantity:hover {
+    background-color: #e66b58; /* Темнее розовый цвет при наведении */
+}
+
+.decrease-quantity:active,
+.increase-quantity:active {
+    background-color: #d64b38; /* Еще темнее розовый цвет при нажатии */
+}
+

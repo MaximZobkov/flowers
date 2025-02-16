@@ -1,34 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="flower-details">
-    <div class="flower-images-description">
-        <div class="flower-images">
-            <div class="main-image">
-                {% if flower[4] %}
-                {% set image_paths = flower[4].split(',') %}
-                <img id="main-image" src="../{{ image_paths[0] }}" alt="{{ flower[1] }}"
-                     style="width: 100%; height: auto;">
-                {% else %}
-                <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Placeholder">
-                {% endif %}
+    <div class="flower-details">
+        <div class="flower-images-description">
+            <div class="flower-images">
+                <div class="main-image-container">
+                    {% if flower[4] %}
+                        {% set image_paths = flower[4].split(',') %}
+                        <button class="thumbnail-arrow left">&#10094;</button>
+                        <img id="main-image" src="../{{ image_paths[0] }}" alt="{{ flower[1] }}"
+                             style="width: 100%; height: auto;">
+                        <button class="thumbnail-arrow right">&#10095;</button>
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Placeholder">
+                    {% endif %}
+                </div>
+                <div class="thumbnails mt-4">
+                    {% if flower[4] %}
+                        {% for image_path in image_paths %}
+                            <img class="thumbnail" src="../{{ image_path }}" alt="{{ flower[1] }}"
+                                 style="width: 50px; height: 50px; cursor: pointer;">
+                        {% endfor %}
+                    {% endif %}
+                </div>
             </div>
-            <div class="thumbnails">
-                {% if flower[4] %}
-                {% for image_path in image_paths %}
-                <img class="thumbnail" src="../{{ image_path }}" alt="{{ flower[1] }}"
-                     style="width: 50px; height: 50px; cursor: pointer;">
-                {% endfor %}
-                {% endif %}
+            <div class="flower-info" style="background-color: white">
+                <h1>{{ flower[1] }}</h1>
+                <p>{{ flower[2] }}</p>
+                <p>Цена: {{ flower[3] }} руб.</p>
+                <a class="add-to-cart-button" href="{{ url_for('add_to_cart', flower_id=flower[0]) }}">Добавить в
+                    корзину</a>
             </div>
-        </div>
-        <div class="flower-info" style="background-color: white">
-            <h1>{{ flower[1] }}</h1>
-            <p>{{ flower[2] }}</p>
-            <p>Цена: {{ flower[3] }} руб.</p>
-            <a class="add-to-cart-button" href="{{ url_for('add_to_cart', flower_id=flower[0]) }}">Добавить в
-                корзину</a>
         </div>
     </div>
-</div>
-
 {% endblock %}

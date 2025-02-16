@@ -110,44 +110,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-    // Обработка прокрутки изображений
-    var thumbnails = document.querySelectorAll('.thumbnail');
-    var mainImage = document.getElementById('main-image');
-
-    thumbnails.forEach(thumbnail => {
-        thumbnail.addEventListener('click', function () {
-            mainImage.src = this.src;
-        });
-    });
-
-    // Обработка увеличения изображения при наведении
-    var flowerCards = document.querySelectorAll('.flower-card img');
-
-    flowerCards.forEach(flowerCard => {
-        flowerCard.addEventListener('mouseover', function () {
-            this.style.transform = 'scale(1.1)';
-        });
-
-        flowerCard.addEventListener('mouseout', function () {
-            this.style.transform = 'scale(1)';
-        });
-    });
-
-    // Обработка стрелок прокрутки изображений
-    var leftArrow = document.querySelector('.thumbnail-arrow.left');
-    var rightArrow = document.querySelector('.thumbnail-arrow.right');
-
-    leftArrow.addEventListener('click', function () {
-        var currentIndex = Array.from(thumbnails).indexOf(document.querySelector('.thumbnail.active'));
-        var newIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
-        thumbnails[newIndex].click();
-    });
-
-    rightArrow.addEventListener('click', function () {
-        var currentIndex = Array.from(thumbnails).indexOf(document.querySelector('.thumbnail.active'));
-        var newIndex = (currentIndex + 1) % thumbnails.length;
-        thumbnails[newIndex].click();
-    });
 });
 
 // Функция для обновления корзины
@@ -169,8 +131,8 @@ function updateCart() {
                 cartItem.classList.add('cart-item');
                 cartItem.setAttribute('data-flower-id', item.id);
                 cartItem.innerHTML = `
-                    <div class="cart-item" data-flower-id="${ item.id }">
-                    <img src="../${item.image_paths.split(',')[0]}" alt="${ item.name }">
+                    <div class="cart-item" data-flower-id="${item.id}">
+                    <img src="../${item.image_paths.split(',')[0]}" alt="${item.name}">
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-price">${item.price} руб.</div>
@@ -319,3 +281,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+document.addEventListener('DOMContentLoaded', function () {
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    const mainImage = document.getElementById('main-image');
+    const leftArrow = document.querySelector('.thumbnail-arrow.left');
+    const rightArrow = document.querySelector('.thumbnail-arrow.right');
+    let currentIndex = 0;
+
+    // Обновление основного изображения
+    function updateMainImage() {
+        mainImage.src = thumbnails[currentIndex].src;
+    }
+
+    // Обработчик клика на миниатюру
+    thumbnails.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', function () {
+            currentIndex = index;
+            updateMainImage();
+        });
+    });
+
+    // Обработчик клика на левую стрелку
+    leftArrow.addEventListener('click', function () {
+        currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+        updateMainImage();
+    });
+
+    // Обработчик клика на правую стрелку
+    rightArrow.addEventListener('click', function () {
+        currentIndex = (currentIndex + 1) % thumbnails.length;
+        updateMainImage();
+    });
+});
+

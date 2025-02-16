@@ -112,9 +112,11 @@ def index():
 @app.route('/flower/<int:flower_id>')
 def flower(flower_id):
     flower = models.get_flower(flower_id)
+    image_paths = flower[4].split(',')  # Разделяем строку путей на массив
     cart_items = session.get('cart', [])
     total_price = sum(item['price'] for item in cart_items)  # Используем ключ 'price'
-    return render_template('product.html', flower=flower, total_price=total_price)
+    return render_template('product.html', flower=flower, image_paths=image_paths, total_price=total_price)
+
 
 
 @app.route('/add', methods=['GET', 'POST'])
