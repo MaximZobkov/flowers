@@ -22,7 +22,7 @@
                 <script>
                     setTimeout(function () {
                         document.getElementById('flash-message-{{ loop.index }}').style.display = 'none';
-                    }, 3000);
+                    }, 10000);
                 </script>
             {% endfor %}
         </div>
@@ -107,7 +107,7 @@
                      style="width: 24px; height: 24px; vertical-align: middle;">
             </a>
         </div>
-        <h3>Наш адрес:</h3>
+        <h3 class="mt-4">Наш адрес:</h3>
         <p><a href="https://yandex.ru/navi/org/desfleur/204205974366/?ll=37.348976%2C55.801481&z=16" target="_blank">г.
             Москва, квартал №100, д. 1, корп. 1</a></p>
         <p>
@@ -130,7 +130,6 @@
                         <div class="cart-item-name">{{ item.name }}</div>
                         <div class="cart-item-price">{{ item.price }} руб.</div>
                         <div class="cart-item-quantity">
-                            Количество:
                             <button class="decrease-quantity">-</button>
                             <span class="quantity">{{ item.quantity }}</span>
                             <button class="increase-quantity">+</button>

@@ -137,7 +137,6 @@ function updateCart() {
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-price">${item.price} руб.</div>
                         <div class="cart-item-quantity">
-                            Количество:
                             <button class="decrease-quantity">-</button>
                             <span class="quantity">${item.quantity}</span>
                             <button class="increase-quantity">+</button>

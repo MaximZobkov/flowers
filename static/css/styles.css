@@ -17,6 +17,7 @@ header {
     width: 100%;
     padding: 4px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 
 nav {
@@ -24,6 +25,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    z-index: 999;
 }
 
 .logo-container {
@@ -89,10 +91,12 @@ nav {
     background-color: white;
     padding: 15px;
     box-shadow: 3px 3px 3px 3px grey;
+    z-index: 200;
 }
 
 .cart-image {
     width: 3vw;
+    z-index: 200;
 }
 
 /* Стили для основного контента */
@@ -401,7 +405,6 @@ footer {
 .cart-item {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #ddd;
     padding: 10px 0;
 }
 
@@ -576,6 +579,7 @@ footer {
     position: relative;
     display: inline-block;
     width: 100%;
+    z-index: 1;
 }
 
 .main-image-container img {
@@ -595,7 +599,6 @@ footer {
     border-radius: 50%;
     width: 30px;
     height: 30px;
-    display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -970,13 +973,9 @@ footer {
 
 .decrease-quantity,
 .increase-quantity {
-    background-color: #f58c78; /* Розовый цвет */
-    color: white;
     border: none;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
+    background-color: rgb(255, 255, 255);
+    color: black;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -984,13 +983,4 @@ footer {
     transition: background-color 0.3s ease;
 }
 
-.decrease-quantity:hover,
-.increase-quantity:hover {
-    background-color: #e66b58; /* Темнее розовый цвет при наведении */
-}
-
-.decrease-quantity:active,
-.increase-quantity:active {
-    background-color: #d64b38; /* Еще темнее розовый цвет при нажатии */
-}
 
