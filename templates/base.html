@@ -122,7 +122,7 @@
             <span class="close-button">&times;</span>
             <h2>Ваш заказ:</h2>
         </div>
-        <div class="mt-4" id="cart-items">
+        <div id="cart-items">
             {% for item in session.get('cart', []) %}
                 <div class="cart-item" data-flower-id="{{ item.id }}">
                     <img src="../{{ item.image_paths.split(',')[0] }}" alt="{{ item.name }}">
@@ -137,6 +137,7 @@
                     </div>
                     <div class="remove-from-cart-mark">&times;</div>
                 </div>
+                <div style="border-bottom: 1px solid #000">     </div>
             {% endfor %}
         </div>
         <p style="font-size: 1.1em">Сумма: <span style="font-size: 1.1em" id="total-price">{{ total_price }}</span> р.

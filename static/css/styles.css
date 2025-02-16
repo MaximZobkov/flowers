@@ -592,11 +592,10 @@ footer {
 .thumbnail-arrow {
     position: absolute;
     top: 50%;
+    background-color: rgba(0, 0, 0, 0.0);
     transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.5);
     color: white;
     border: none;
-    border-radius: 50%;
     width: 30px;
     height: 30px;
     justify-content: center;
@@ -614,8 +613,8 @@ footer {
     right: 10px;
 }
 
-.thumbnail-arrow:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+.thumbnail-arrow:active {
+    text-decoration: none;
 }
 
 

@@ -144,6 +144,7 @@ function updateCart() {
                     </div>
                     <div class="remove-from-cart-mark">&times;</div>
                 </div>
+                <div style="border-bottom: 1px solid #000">   </div>
                 `;
                 cartItems.appendChild(cartItem);
             });
