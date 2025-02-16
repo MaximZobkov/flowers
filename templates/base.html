@@ -125,11 +125,16 @@
         <div class="mt-4" id="cart-items">
             {% for item in session.get('cart', []) %}
                 <div class="cart-item" data-flower-id="{{ item.id }}">
-                     <img src="../{{ item.image_paths.split(',')[0] }}" alt="{{ item.name }}">
+                    <img src="../{{ item.image_paths.split(',')[0] }}" alt="{{ item.name }}">
                     <div class="cart-item-info">
-                        <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">${item.price} руб.</div>
-                        <div class="cart-item-quantity">Количество: ${item.quantity}</div>
+                        <div class="cart-item-name">{{ item.name }}</div>
+                        <div class="cart-item-price">{{ item.price }} руб.</div>
+                        <div class="cart-item-quantity">
+                            Количество:
+                            <button class="decrease-quantity">-</button>
+                            <span class="quantity">{{ item.quantity }}</span>
+                            <button class="increase-quantity">+</button>
+                        </div>
                     </div>
                     <div class="remove-from-cart-mark">&times;</div>
                 </div>

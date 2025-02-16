@@ -184,7 +184,6 @@ def get_cart():
     return jsonify(cart=cart_items, total_price=total_price)
 
 
-
 @app.route('/remove_from_cart/<int:flower_id>', methods=['POST'])
 def remove_from_cart(flower_id):
     if 'cart' in session:
@@ -207,9 +206,9 @@ def submit_order():
     phone = request.form['phone']
     promo_code = request.form.get('promo_code', '')
     cart = session.get('cart', [])
-    cart_items = [f"{item['name']} - {item['price']} руб." for item in cart]
+    cart_items = [f"{item['name']} - {item['quantity']} шт. на {item['price'] * item['quantity']} руб." for item in cart]
     cart_items_str = "\n".join(cart_items)
-    total_price = sum([item['price'] for item in cart])
+    total_price = sum([item['price'] * item['quantity'] for item in cart])
     message = f"Новый заказ:\n\nФИО: {name}\nТелефон: {phone}\n\nТовары:\n{cart_items_str}\n------------------------------------\n\nСумма: {total_price} руб."
 
     # Check the promo code
@@ -222,15 +221,33 @@ def submit_order():
     # Send the message via requests
     payload = {'chat_id': TELEGRAM_USERNAME, 'text': message}
     response = requests.post(TELEGRAM_API_URL, data=payload)
-
     # Log the response
     logging.info(f"Response status code: {response.status_code}")
     logging.info(f"Response text: {response.text}")
 
     if response.status_code == 200:
+        flash('Заказ отправлен', 'success')
         return jsonify(success=True)
     else:
+        flash('Заказ не отправлен. Произошла ошибка', 'error')
         return jsonify(success=False, error=response.text), 500
+
+
+@app.route('/update_cart_quantity', methods=['POST'])
+def update_cart_quantity():
+    data = request.get_json()
+    flower_id = data.get('flowerId')
+    quantity = data.get('quantity')
+
+    if 'cart' in session:
+        for item in session['cart']:
+            print(flower_id)
+            if item['id'] == flower_id:
+                item['quantity'] = quantity
+                session.modified = True
+                break
+
+    return jsonify(success=True)
 
 
 @app.route('/create_promo_code', methods=['GET', 'POST'])

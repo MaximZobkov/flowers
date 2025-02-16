@@ -169,13 +169,20 @@ function updateCart() {
                 cartItem.classList.add('cart-item');
                 cartItem.setAttribute('data-flower-id', item.id);
                 cartItem.innerHTML = `
-                    <img src="../${ item.image_paths.split(',')[0] }" alt="{{ item.name }}">
+                    <div class="cart-item" data-flower-id="${ item.id }">
+                    <img src="../${item.image_paths.split(',')[0]}" alt="${ item.name }">
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-price">${item.price} руб.</div>
-                        <div class="cart-item-quantity">Количество: ${item.quantity}</div>
+                        <div class="cart-item-quantity">
+                            Количество:
+                            <button class="decrease-quantity">-</button>
+                            <span class="quantity">${item.quantity}</span>
+                            <button class="increase-quantity">+</button>
+                        </div>
                     </div>
                     <div class="remove-from-cart-mark">&times;</div>
+                </div>
                 `;
                 cartItems.appendChild(cartItem);
             });
@@ -214,7 +221,6 @@ document.getElementById("order-form").onsubmit = function (event) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert("Заказ успешно оформлен!");
                 // Clear the cart after a successful order
                 fetch('/clear_cart', {
                     method: 'POST'
@@ -223,6 +229,7 @@ document.getElementById("order-form").onsubmit = function (event) {
                     .then(data => {
                         if (data.success) {
                             updateCart();
+                            location.reload();
                         }
                     });
             } else {
@@ -261,3 +268,54 @@ document.getElementById("apply-promo-code").onclick = function () {
         });
 };
 
+document.addEventListener('DOMContentLoaded', function () {
+    cartItems.addEventListener('click', function (event) {
+        if (event.target.classList.contains('remove-from-cart-mark')) {
+            var flowerId = parseInt(event.target.parentElement.getAttribute('data-flower-id'));
+            fetch('/remove_from_cart/' + flowerId, {
+                method: 'POST'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateCart();
+                    } else {
+                        alert("Произошла ошибка при удалении товара из корзины.");
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        } else if (event.target.classList.contains('increase-quantity') || event.target.classList.contains('decrease-quantity')) {
+            var flowerId = parseInt(event.target.closest('.cart-item').getAttribute('data-flower-id'));
+            var quantityElement = event.target.closest('.cart-item-quantity').querySelector('.quantity');
+            var quantity = parseInt(quantityElement.textContent);
+
+            if (event.target.classList.contains('increase-quantity')) {
+                quantity += 1;
+            } else if (event.target.classList.contains('decrease-quantity') && quantity > 1) {
+                quantity -= 1;
+            }
+
+            fetch('/update_cart_quantity', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({flowerId: flowerId, quantity: quantity})
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        quantityElement.textContent = quantity;
+                        updateCart();
+                    } else {
+                        alert("Произошла ошибка при обновлении количества товара.");
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+    });
+});
