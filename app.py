@@ -149,7 +149,7 @@ def add_to_cart(flower_id):
     session['cart'].append(flower)
     session.modified = True
     flash('Товар добавлен в корзину', 'success')
-    return redirect(url_for('index'))
+    return redirect("/flower/" + str(flower_id))
 
 
 @app.route('/clear_cart', methods=['POST'])
@@ -160,7 +160,6 @@ def clear_cart():
 
 @app.route('/get_cart')
 def get_cart():
-    print(PROMO_CODES)
     cart_with_quantities = []
     flower_cart = {}
     cart_items = session.get('cart', [])
@@ -186,9 +185,6 @@ def remove_from_cart(flower_id):
         session.modified = True
         return jsonify(success=True)
     return jsonify(success=False)
-
-
-PROMO_CODES = {}
 
 
 @app.route('/admin_panel')

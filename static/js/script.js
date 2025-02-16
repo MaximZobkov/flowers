@@ -151,38 +151,41 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Функция для обновления корзины
+
 function updateCart() {
     fetch('/get_cart')
         .then(response => response.json())
         .then(data => {
+            const cartItems = document.getElementById('cart-items');
+            const totalPrice = document.getElementById('total-price');
+            const cartCount = document.getElementById('cart-count');
+
             cartItems.innerHTML = '';
             totalPrice.textContent = data.total_price;
             cartCount.textContent = data.cart.length;
+
             data.cart.forEach(item => {
-                var cartItem = document.createElement('div');
+                const cartItem = document.createElement('div');
                 cartItem.classList.add('cart-item');
                 cartItem.setAttribute('data-flower-id', item.id);
                 cartItem.innerHTML = `
-                <div class="img-carts">
-                        <img style="height: 8vh" src="../${item.image}" alt="${item.name}">
+                    <img src="../${item.image}" alt="${item.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price} руб.</div>
+                        <div class="cart-item-quantity">Количество: ${item.quantity}</div>
                     </div>
-                    <div class="name-products" >
-                        <span>${item.name} (x${item.quantity})</span>
-                    </div>
-                    <div class="cost-div">
-                        <span class="cost">${item.price * item.quantity}&nbsp</span><span>р.</span>
-                    </div>
-                        <a class="remove-from-cart-mark">&times;</a>
-            `;
+                    <div class="remove-from-cart-mark">&times;</div>
+                `;
                 cartItems.appendChild(cartItem);
             });
-            checkoutBtn.disabled = data.cart.length === 0;
+            const checkoutButton = document.getElementById('checkout-button');
+            checkoutButton.disabled = data.cart.length === 0;
         })
         .catch((error) => {
             console.error('Error:', error);
         });
 }
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const thumbnails = document.querySelectorAll('.thumbnail');

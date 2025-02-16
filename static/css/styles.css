@@ -113,7 +113,6 @@ nav {
 
 .vizit {
     padding-bottom: 20px;
-
     width: 98.75vw;
     margin: -4.2vh auto auto 0;
     display: block;
@@ -231,7 +230,6 @@ nav {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
 }
-
 
 .flower-info {
     background-color: #fffff8; /* Белый */
@@ -363,8 +361,6 @@ footer {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.3); /* Увеличиваем прозрачность */
 }
 
 .modal-content {
@@ -381,66 +377,118 @@ footer {
 }
 
 .close-button {
+    font-size: 2em;
     color: #aaa;
-    float: right;
-    font-size: 32px;
-    margin-top: -0.5em;
+    cursor: pointer;
+    position: absolute;
+    right: 1em;
+}
+
+.close-button:hover {
+    color: #000;
 }
 
 .name-and-close .h2 {
     float: left;
 }
 
-.close-button:hover,
-.close-button:focus {
-    color: black;
-    text-decoration: none;
+
+.cart-items {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 15px;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-details h3 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.cart-item-details p {
+    margin: 5px 0 0;
+    font-size: 1em;
+    color: #777;
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+}
+
+.cart-item-actions .quantity {
+    margin: 0 10px;
+    font-size: 1.2em;
+}
+
+.cart-item-actions .remove-from-cart {
+    color: #aaa;
+    font-size: 1.5em;
     cursor: pointer;
 }
 
-.cart-item {
-    background-color: #ffffff;
-    border-bottom: #333333 1px solid;
-    border-top: #333333 1px solid;
-    margin-bottom: 10px;
+.cart-item-actions .remove-from-cart:hover {
+    color: #000;
 }
 
-.cart-item {
-    display: table;
-    width: 100%; /*Optional*/
+.cart-summary {
+    text-align: right;
+    margin-top: 20px;
 }
 
-.img-carts {
-    float: left;
-    display: table-cell;
-    max-width: 15%;
+.cart-summary p {
+    font-size: 1.2em;
+    margin: 0 0 10px;
+}
+
+.cart-summary .btn {
+    padding: 10px 20px;
+    font-size: 1.2em;
 }
 
 .name-products {
     float: left;
-    margin-left: 6px;
+    margin-left: 2em;
     width: 67%;
     display: table-cell;
 }
 
 .cost-div {
-    float: left;
+    position: absolute;
+    right: 0;
     width: 15%;
 }
 
 .mark-del {
-    float: right;
-    width: 3%;
+    position: absolute;
+    right: 0;
+    top: 0;
 }
 
-
 .remove-from-cart-mark {
-    border-radius: 5px;
     color: #888;
     font-size: 28px;
     cursor: pointer;
     text-decoration: none;
-    float: right;
+    position: absolute;
+    right: 3vw;
 }
 
 .remove-from-cart-mark:hover {
@@ -577,7 +625,6 @@ footer {
     display: block;
 }
 
-
 /* Media queries for responsive design */
 @media (max-width: 1200px) {
     .flower-card {
@@ -589,7 +636,9 @@ footer {
     .flower-card {
         width: calc(50% - 2em);
     }
-
+    .remove-from-cart-mark {
+        right: 4vw;
+    }
     .logo-full {
         display: none;
     }
@@ -598,6 +647,7 @@ footer {
         display: block;
         font-size: 2em;
     }
+
     .cart {
         position: fixed;
         top: 12vh;
@@ -609,6 +659,7 @@ footer {
         padding: 15px;
         box-shadow: 3px 3px 3px 3px grey;
     }
+
     .vizit-mobile {
         display: block;
     }
@@ -619,7 +670,6 @@ footer {
 
     .cart-image {
         width: 4vw;
-
     }
 }
 
@@ -628,6 +678,9 @@ footer {
         float: left;
         display: table-cell;
         max-width: 15%;
+    }
+    .remove-from-cart-mark {
+        right: 6vw;
     }
 
     .cart-image {
@@ -660,6 +713,7 @@ footer {
         flex-direction: column;
         align-items: center;
     }
+
     .cart {
         position: fixed;
         top: 12vh;
@@ -671,6 +725,7 @@ footer {
         padding: 15px;
         box-shadow: 3px 3px 3px 3px grey;
     }
+
     .flower-images-description {
         flex-direction: column;
         width: 100%;
@@ -688,7 +743,6 @@ footer {
     .vizit {
         display: none;
     }
-
 }
 
 @media (max-width: 768px) {
@@ -699,7 +753,9 @@ footer {
     .cart-image {
         width: 5vw;
     }
-
+    .remove-from-cart-mark {
+        right: 5vw;
+    }
     .cart {
         position: fixed;
         top: 12vh;
@@ -747,7 +803,6 @@ footer {
     .vizit {
         display: none;
     }
-
 }
 
 /* Стили для полупрозрачного слоя */
@@ -856,4 +911,3 @@ footer {
 .name-and-close {
     display: table;
 }
-

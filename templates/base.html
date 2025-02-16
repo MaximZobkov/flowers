@@ -72,7 +72,8 @@
                 </a>
             </div>
             <p class="mt-1 mb-1">
-                <a href="#contact" class="contacts">Контакты</a>
+                <a href="#contact" class="contacts btn"
+                   style="text-decoration: none;font-size: 1.4em;color: white;font-family: bradley hand, cursive;">Контакты</a>
             </p>
         </div>
     </nav>
@@ -125,7 +126,7 @@
             {% for item in session.get('cart', []) %}
                 <div class="cart-item" data-flower-id="{{ item[0] }}">
                     <div class="img-carts">
-                        <img style="height: 8vh" src="../${item.image}" alt="${item.name}">
+                        <img src="../${item.image}" alt="${item.name}">
                     </div>
                     <div class="name-products">
                         <span>${item.name} (x${item.quantity})</span>
@@ -163,7 +164,9 @@
             <div class="form-group">
                 <label for="promo_code">Промокод:</label>
                 <input type="text" id="promo_code" name="promo_code" class="form-input">
-                <button type="button" id="apply-promo-code" class="form-button form-button-apply mt-4">Применить промокод</button>
+                <button type="button" id="apply-promo-code" class="form-button form-button-apply mt-4">Применить
+                    промокод
+                </button>
                 <p id="promo-code-message"></p>
             </div>
 
