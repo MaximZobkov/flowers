@@ -124,18 +124,14 @@
         </div>
         <div class="mt-4" id="cart-items">
             {% for item in session.get('cart', []) %}
-                <div class="cart-item" data-flower-id="{{ item[0] }}">
-                    <div class="img-carts">
-                        <img src="../${item.image}" alt="${item.name}">
+                <div class="cart-item" data-flower-id="{{ item.id }}">
+                     <img src="../{{ item.image_paths.split(',')[0] }}" alt="{{ item.name }}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">${item.price} руб.</div>
+                        <div class="cart-item-quantity">Количество: ${item.quantity}</div>
                     </div>
-                    <div class="name-products">
-                        <span>${item.name} (x${item.quantity})</span>
-                    </div>
-                    <div class="cost-div">
-                        <span class="cost">${str(item.price * item.quantity)&nbsp</span><span>р.</span>
-                    </div>
-
-                    <a class="remove-from-cart-mark">&times;</a>
+                    <div class="remove-from-cart-mark">&times;</div>
                 </div>
             {% endfor %}
         </div>
@@ -144,6 +140,7 @@
         <button id="checkout-button" class="checkout-button">Оформить заказ</button>
     </div>
 </div>
+
 <!-- Модальное окно оформления заказа -->
 <div id="order-modal" class="modal">
     <div class="modal-content">

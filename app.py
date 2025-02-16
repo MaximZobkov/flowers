@@ -92,6 +92,7 @@ def crop_image(image_path):
 
 
 @app.route('/')
+@app.route('/')
 def index():
     category = request.args.get('category')
     categories_with_flowers = models.get_categories_with_flowers()
@@ -102,7 +103,7 @@ def index():
         grouped_flowers = models.get_flowers_grouped_by_category()
 
     cart_items = session.get('cart', [])
-    total_price = sum(item[3] for item in cart_items)
+    total_price = sum(item['price'] for item in cart_items)  # Используем ключ 'price'
 
     return render_template('index.html', grouped_flowers=grouped_flowers, categories=categories_with_flowers,
                            categories_description=CATEGORY_DESCRIPTIONS, cart_items=cart_items, total_price=total_price)
@@ -112,7 +113,7 @@ def index():
 def flower(flower_id):
     flower = models.get_flower(flower_id)
     cart_items = session.get('cart', [])
-    total_price = sum(item[3] for item in cart_items)
+    total_price = sum(item['price'] for item in cart_items)  # Используем ключ 'price'
     return render_template('product.html', flower=flower, total_price=total_price)
 
 
@@ -142,11 +143,28 @@ def add_flower():
 
 @app.route('/add_to_cart/<int:flower_id>')
 def add_to_cart(flower_id):
-    global flower_cart
     flower = models.get_flower(flower_id)
     if 'cart' not in session:
         session['cart'] = []
-    session['cart'].append(flower)
+
+    # Преобразуем кортеж в словарь и добавляем количество
+    flower_dict = {
+        'id': flower[0],
+        'name': flower[1],
+        'description': flower[2],
+        'price': flower[3],
+        'image_paths': flower[4],
+        'quantity': 1  # Добавляем количество
+    }
+
+    # Проверяем, есть ли уже такой товар в корзине
+    for item in session['cart']:
+        if item['id'] == flower_id:
+            item['quantity'] += 1  # Увеличиваем количество, если товар уже в корзине
+            break
+    else:
+        session['cart'].append(flower_dict)  # Добавляем новый товар в корзину
+
     session.modified = True
     flash('Товар добавлен в корзину', 'success')
     return redirect("/flower/" + str(flower_id))
@@ -159,29 +177,18 @@ def clear_cart():
 
 
 @app.route('/get_cart')
+@app.route('/get_cart')
 def get_cart():
-    cart_with_quantities = []
-    flower_cart = {}
     cart_items = session.get('cart', [])
-    total_price = 0
-    for item in cart_items:
-        flower_cart[item[0]] = flower_cart.get(item[0], 0) + 1
-    for item in set(cart_items):
-        cart_with_quantities.append({
-            'id': item[0],
-            'name': item[1],
-            'price': item[3],
-            'image': item[4].split(',')[0] if item[4] else None,
-            'quantity': flower_cart.get(item[0], 0)
-        })
-        total_price += item[3] * flower_cart.get(item[0])
-    return jsonify(cart=cart_with_quantities, total_price=total_price)
+    total_price = sum(item['price'] * item['quantity'] for item in cart_items)
+    return jsonify(cart=cart_items, total_price=total_price)
+
 
 
 @app.route('/remove_from_cart/<int:flower_id>', methods=['POST'])
 def remove_from_cart(flower_id):
     if 'cart' in session:
-        session['cart'] = [item for item in session['cart'] if item[0] != flower_id]
+        session['cart'] = [item for item in session['cart'] if item['id'] != flower_id]
         session.modified = True
         return jsonify(success=True)
     return jsonify(success=False)
@@ -200,9 +207,9 @@ def submit_order():
     phone = request.form['phone']
     promo_code = request.form.get('promo_code', '')
     cart = session.get('cart', [])
-    cart_items = [f"{item[1]} - {item[3]} руб." for item in cart]
+    cart_items = [f"{item['name']} - {item['price']} руб." for item in cart]
     cart_items_str = "\n".join(cart_items)
-    total_price = sum([int(item.split()[-2]) for item in cart_items])
+    total_price = sum([item['price'] for item in cart])
     message = f"Новый заказ:\n\nФИО: {name}\nТелефон: {phone}\n\nТовары:\n{cart_items_str}\n------------------------------------\n\nСумма: {total_price} руб."
 
     # Check the promo code

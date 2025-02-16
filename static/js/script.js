@@ -169,7 +169,7 @@ function updateCart() {
                 cartItem.classList.add('cart-item');
                 cartItem.setAttribute('data-flower-id', item.id);
                 cartItem.innerHTML = `
-                    <img src="../${item.image}" alt="${item.name}">
+                    <img src="../${ item.image_paths.split(',')[0] }" alt="{{ item.name }}">
                     <div class="cart-item-info">
                         <div class="cart-item-name">${item.name}</div>
                         <div class="cart-item-price">${item.price} руб.</div>
@@ -186,6 +186,7 @@ function updateCart() {
             console.error('Error:', error);
         });
 }
+
 
 document.addEventListener('DOMContentLoaded', function () {
     const thumbnails = document.querySelectorAll('.thumbnail');
